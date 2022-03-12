@@ -39,10 +39,10 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<dependency>
+		<!--dependencyy>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-monitor</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		<!--dependency>
 			<groupId>org.springframework.cloud</groupId>
