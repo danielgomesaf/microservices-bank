@@ -29,6 +29,8 @@ public class LoansController {
 	@PostMapping("/my-loans")
 	public List<Loans> getLoansDetails(@RequestBody Customer customer) {
 		
+		System.out.println("INVOKING LOANS MICROSERVICE. TESTING RETRY PATTERN");
+		
 		List<Loans> loans = loansRepository.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
 		
 		return loans;
