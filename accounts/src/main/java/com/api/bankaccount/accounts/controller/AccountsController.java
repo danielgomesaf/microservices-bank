@@ -2,6 +2,8 @@ package com.api.bankaccount.accounts.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,8 @@ import io.github.resilience4j.retry.annotation.Retry;
 @RestController
 public class AccountsController {
 
+	private static final Logger logger = LoggerFactory.getLogger(AccountsController.class);
+	
 	@Autowired
 	private AccountsRepository accountsRepository;
 	
@@ -64,6 +68,8 @@ public class AccountsController {
 	@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallBack")
 	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
 	public CustomerDetails myCustomerDetails(@RequestHeader("bank-correlation-id") String correlationId, @RequestBody Customer customer) {
+	
+		logger.info("myCustomerDetails() method started");
 		
 		Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
 		List<Loans> loans = loansFeignClient.getLoanDetails(correlationId, customer);
@@ -73,6 +79,8 @@ public class AccountsController {
 		customerDetails.setAccounts(accounts);
 		customerDetails.setLoans(loans);
 		customerDetails.setCards(cards);
+		
+		logger.info("myCustomerDetails() method ended");
 		
 		return customerDetails;
 	}
