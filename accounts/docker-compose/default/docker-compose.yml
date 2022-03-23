@@ -2,6 +2,27 @@ version: "3.8"
 
 services:
 
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./../monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - bank-network
+
+  grafana:
+    image: "grafana/grafana:latest"
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    networks:
+      - bank-network
+    depends_on:
+      - prometheus
+
   zipkin:
     image: openzipkin/zipkin
     mem_limit: 700mb
