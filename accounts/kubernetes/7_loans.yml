@@ -23,22 +23,22 @@ spec:
           - name: SPRING_PROFILES_ACTIVE
             valueFrom:
               configMapKeyRef:
-                name: bankapplication-configmaps
+                name: bankapplication-configmap
                 key: SPRING_PROFILES_ACTIVE
           - name: SPRING_ZIPKIN_BASEURL
             valueFrom:
               configMapKeyRef:
-                name: bankapplication-configmaps
+                name: bankapplication-configmap
                 key: SPRING_ZIPKIN_BASEURL
           - name: SPRING_CONFIG_IMPORT
             valueFrom:
               configMapKeyRef:
-                name: bankapplication-configmaps
+                name: bankapplication-configmap
                 key: SPRING_CONFIG_IMPORT
           - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
             valueFrom:
               configMapKeyRef:
-                name: bankapplication-configmaps
+                name: bankapplication-configmap
                 key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
 ---
 apiVersion: v1
