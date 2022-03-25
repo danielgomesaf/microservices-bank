@@ -1,27 +1,30 @@
 package com.api.bankaccount.accounts.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 public class Cards {
 
 	private int cardId;
-	
-	private String cardNumber;
-	
+
 	private int customerId;
-	
+
+	private String cardNumber;
+
 	private String cardType;
-	
-	private double totalLimit;
-	
-	private double amountUsed;
-	
-	private double availableAmount;
-	
-	private LocalDate createDt;
+
+	private int totalLimit;
+
+	private int amountUsed;
+
+	private int availableAmount;
+
+	private Date createDt;
+
 }

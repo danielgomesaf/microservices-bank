@@ -16,17 +16,17 @@ spec:
     spec:
       containers:
       - name: configserver
-        image: danielgomesaf/configserver
+        image: danielgomesaf/configserver:latest
         ports:
         - containerPort: 8071
         env:
         - name: SPRING_ZIPKIN_BASEURL
-          valueFrom:
+          valueFrom: 
             configMapKeyRef:
               name: bankapplication-configmap
               key: SPRING_ZIPKIN_BASEURL
         - name: SPRING_PROFILES_ACTIVE
-          valueFrom:
+          valueFrom: 
             configMapKeyRef:
               name: bankapplication-configmap
               key: SPRING_PROFILES_ACTIVE

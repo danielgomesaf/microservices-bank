@@ -6,15 +6,13 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class Properties {
 
 	private String msg;
-	
 	private String buildVersion;
-	
 	private Map<String, String> mailDetails;
-	
 	private List<String> activeBranches;
 
 	public Properties(String msg, String buildVersion, Map<String, String> mailDetails, List<String> activeBranches) {
@@ -23,4 +21,5 @@ public class Properties {
 		this.mailDetails = mailDetails;
 		this.activeBranches = activeBranches;
 	}
+
 }

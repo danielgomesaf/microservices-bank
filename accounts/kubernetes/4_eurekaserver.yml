@@ -15,26 +15,27 @@ spec:
         app: eurekaserver
     spec:
       containers:
-        - name: eurekaserver
-          image: danielgomesaf/eurekaserver:latest
-          ports:
-          - containerPort: 8070
-          env:
-          - name: SPRING_PROFILES_ACTIVE
-            valueFrom:
-              configMapKeyRef:
-                name: bankapplication-configmap
-                key: SPRING_PROFILES_ACTIVE
-          - name:  SPRING_ZIPKIN_BASEURL
-            valueFrom:
-              configMapKeyRef:
-                name: bankapplication-configmap
-                key: SPRING_ZIPKIN_BASEURL
-          - name: SPRING_CONFIG_IMPORT
-            valueFrom:
-              configMapKeyRef:
-                name: bankapplication-configmap
-                key: SPRING_CONFIG_IMPORT
+      - name: eurekaserver
+        image: danielgomesaf/eurekaserver:latest
+        ports:
+        - containerPort: 8070
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom: 
+            configMapKeyRef:
+              name: bankapplication-configmap
+              key: SPRING_PROFILES_ACTIVE
+        - name: SPRING_ZIPKIN_BASEURL
+          valueFrom: 
+            configMapKeyRef:
+              name: bankapplication-configmap
+              key: SPRING_ZIPKIN_BASEURL
+        - name: SPRING_CONFIG_IMPORT
+          valueFrom: 
+            configMapKeyRef:
+              name: bankapplication-configmap
+              key: SPRING_CONFIG_IMPORT
+
 ---
 apiVersion: v1
 kind: Service

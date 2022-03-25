@@ -14,6 +14,6 @@ import com.api.bankaccount.accounts.model.Customer;
 @FeignClient("cards")
 public interface CardsFeignClient {
 
-	@RequestMapping(method = RequestMethod.POST, value = "my-cards", consumes = "application/json")
-	List<Cards> getCardDetails(@RequestHeader("bank-correlation-id") String correlationId, @RequestBody Customer customer);
+	@RequestMapping(method = RequestMethod.POST, value = "myCards", consumes = "application/json")
+	List<Cards> getCardDetails(@RequestHeader("bank-correlation-id") String correlationid,@RequestBody Customer customer);
 }

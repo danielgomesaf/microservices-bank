@@ -17,19 +17,14 @@ import lombok.ToString;
 public class Customer {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "customer_id")
 	private int customerId;
-	
-	@Column(name = "name")
 	private String name;
-	
-	@Column(name = "email")
 	private String email;
-	
 	@Column(name = "mobile_number")
 	private String mobileNumber;
-	
 	@Column(name = "create_dt")
 	private LocalDate createDt;
+
 }

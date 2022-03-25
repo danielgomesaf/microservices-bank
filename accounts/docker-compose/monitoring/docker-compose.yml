@@ -2,61 +2,61 @@ version: "3.8"
 
 services:
 
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - bank-network
-
   grafana:
     image: "grafana/grafana:latest"
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN=admin
+      - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=password
     networks:
-      - bank-network
+     - bank-network
     depends_on:
-      - prometheus
+      - prometheus  
 
+  prometheus:
+   image: prom/prometheus:latest
+   ports:
+      - "9090:9090"
+   volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml
+   networks:
+    - bank-network
+   
   zipkin:
     image: openzipkin/zipkin
-    mem_limit: 700mb
+    mem_limit: 700m
     ports:
       - "9411:9411"
     networks:
-      - bank-network
+     - bank-network
 
   configserver:
     image: danielgomesaf/configserver:latest
-    mem_limit: 700mb
+    mem_limit: 700m
     ports:
       - "8071:8071"
     networks:
-      - bank-network
+     - bank-network
     depends_on:
       - zipkin
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
-  
+      
   eurekaserver:
     image: danielgomesaf/eurekaserver:latest
-    mem_limit: 700mb
+    mem_limit: 700m
     ports:
       - "8070:8070"
     networks:
-      - bank-network
+     - bank-network
     depends_on:
       - configserver
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 15s
         max_attempts: 3
         window: 120s
     environment:
@@ -66,7 +66,7 @@ services:
 
   accounts:
     image: danielgomesaf/accounts:latest
-    mem_limit: 700mb
+    mem_limit: 700m
     ports:
       - "8080:8080"
     networks:
@@ -77,7 +77,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 30s
         max_attempts: 3
         window: 120s
     environment:
@@ -85,10 +85,10 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
       SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
-
+  
   loans:
     image: danielgomesaf/loans:latest
-    mem_limit: 700mb
+    mem_limit: 700m
     ports:
       - "8090:8090"
     networks:
@@ -99,7 +99,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 30s
         max_attempts: 3
         window: 120s
     environment:
@@ -107,10 +107,10 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
       SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
-
+    
   cards:
     image: danielgomesaf/cards:latest
-    mem_limit: 700mb
+    mem_limit: 700m
     ports:
       - "9000:9000"
     networks:
@@ -121,7 +121,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 30s
         max_attempts: 3
         window: 120s
     environment:
@@ -129,10 +129,10 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
       SPRING_ZIPKIN_BASEURL: http://zipkin:9411/
-
+      
   gatewayserver:
     image: danielgomesaf/gatewayserver:latest
-    mem_limit: 700mb
+    mem_limit: 700m
     ports:
       - "8072:8072"
     networks:
@@ -140,9 +140,9 @@ services:
     depends_on:
       - configserver
       - eurekaserver
-      - accounts
       - cards
       - loans
+      - accounts
     deploy:
       restart_policy:
         condition: on-failure
